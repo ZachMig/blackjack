@@ -15,17 +15,28 @@ public class Game {
 		deck = Card.getStandardDeck();
 		dealerHand = new ArrayList<>(2);
 		Collections.shuffle(deck);
-		
 		for (int i = 0; i < numPlayers; i++) {
 			players.add(new Player());
 		}
+		
+		//Deal cards
+		dealerHand.add(deck.remove(0));
+		for (Player p : players) 
+			p.deal(deck.remove(0));
+		for (Player p : players) 
+			p.deal(deck.remove(0));
+		dealerHand.add(deck.remove(0));
+		
 		
 		
 	}
 	
 	public void showAllHands() {
 		System.out.println("----------------");
-		System.out.println("Dealer Hand: " + "");
+		System.out.println("Dealer Hand: [Hidden}, " + dealerHand.get(0));
+		for (Player p : players) {
+			System.out.println(p.showHand());
+		}
 	}
 	
 	public void seeAllChips() {

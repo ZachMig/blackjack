@@ -10,7 +10,7 @@ public class Player {
 	private int handValue;
 	
 	public Player() {
-		this.hand = new ArrayList<>();
+		this.hand = new ArrayList<>(2);
 		this.chips = 1000;
 		handValue = 0;
 	}
@@ -18,6 +18,10 @@ public class Player {
 	public void deal(Card c) {
 		hand.add(c);
 		handValue += c.value(); //Logic here for Aces 1/11
+	}
+	
+	public String showHand() { 
+		return new String(hand.get(0) + ", " + hand.get(1) + ": Value: " + handValue);
 	}
 	
 	public int getChips() {

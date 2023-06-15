@@ -16,9 +16,16 @@ public class Main {
 		
 		//game.seeAllChips();
 		
-		game.showAllHands();
+		while(true) {
+			game.showAllHands();
+			
+			
+			
+			
+		}
 		
-		scanner.close();
+		
+//		scanner.close();
 	}
 
 }

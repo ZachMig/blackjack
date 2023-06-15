@@ -78,10 +78,9 @@ public record Card(Suit suit, String face, int value) {
 	
 	@Override
 	public String toString() {
-		return String.format("%s%s(%d)", 
+		return String.format("%s%s", 
 			value <= 8 ? face : face.charAt(0), 
-			this.suit.toString().charAt(0), 
-			value);
+			this.suit.toString().charAt(0));
 	}
 	
 	
