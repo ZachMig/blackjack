@@ -12,15 +12,21 @@ public class Main {
 		
 		int numPlayers = scanner.nextInt();
 		
-		Game game = new Game(numPlayers);
+		Game game = new Game(numPlayers, scanner);
 		
 		//game.seeAllChips();
 		
 		while(true) {
 			game.showAllHands();
 			
+			game.runRound();
 			
 			game.cleanUpPlayers();
+			
+			if (game.isOver()) {
+				System.out.println("All players are out of chips. Ending game.");
+				break;
+			}
 			
 		}
 		

@@ -2,6 +2,7 @@ package com.zachmig;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player {
 	
@@ -23,7 +24,8 @@ public class Player {
 	}
 	
 	public String showHand() { 
-		return new String(hand.get(0) + ", " + hand.get(1) + ": Value: " + handValue);
+		//return new String(hand.get(0) + ", " + hand.get(1) + ": Value: " + handValue);
+		return hand.stream().map(Object::toString).collect(Collectors.joining(", "));
 	}
 	
 	public int getChips() {
@@ -32,5 +34,9 @@ public class Player {
 	
 	public int getId() {
 		return this.id;
+	}
+	
+	public int getHandValue() {
+		return this.handValue;
 	}
 }
