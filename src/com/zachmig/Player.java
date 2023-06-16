@@ -5,11 +5,13 @@ import java.util.List;
 
 public class Player {
 	
+	private int id;
 	private List<Card> hand;
 	private int chips;
 	private int handValue;
 	
-	public Player() {
+	public Player(int id) {
+		this.id = id;
 		this.hand = new ArrayList<>(2);
 		this.chips = 1000;
 		handValue = 0;
@@ -26,5 +28,9 @@ public class Player {
 	
 	public int getChips() {
 		return this.chips;
+	}
+	
+	public int getId() {
+		return this.id;
 	}
 }

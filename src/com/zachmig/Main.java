@@ -20,7 +20,7 @@ public class Main {
 			game.showAllHands();
 			
 			
-			
+			game.cleanUpPlayers();
 			
 		}
 		
