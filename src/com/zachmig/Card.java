@@ -16,6 +16,7 @@ public record Card(Suit suit, String face, int value) {
 	static final List<String> allFaces = Arrays.asList(
 			"2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K", "A");
 	
+	
 	/**
 	 * Custom constructor to handle abbreviated values of face
 	 * @param suit
