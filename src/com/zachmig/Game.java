@@ -16,7 +16,7 @@ public class Game {
 		dealerHand = new ArrayList<>(2);
 		Collections.shuffle(deck);
 		for (int i = 0; i < numPlayers; i++) {
-			players.add(new Player());
+			players.add(new Player(i));
 		}
 		
 		//Deal cards
@@ -42,6 +42,15 @@ public class Game {
 	public void seeAllChips() {
 		for (Player p : players) {
 			System.out.println(p.getChips());
+		}
+	}
+	
+	public void cleanUpPlayers() {
+		for (Player p : players) {
+			if (p.getChips() == 0) {
+				System.out.println("Player #" + p.getId() + " can no longer play and is out of the game.");
+				players.remove(p);
+			}
 		}
 	}
 	
