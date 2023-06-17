@@ -17,8 +17,6 @@ public class Main {
 		//game.seeAllChips();
 		
 		while(true) {
-			game.showAllHands();
-			
 			game.runRound();
 			
 			game.cleanUpPlayers();
