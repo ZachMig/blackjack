@@ -1,5 +1,7 @@
 package com.zachmig;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -12,14 +14,21 @@ public class Main {
 		
 		int numPlayers = scanner.nextInt();
 		
-		Game game = new Game(numPlayers, scanner);
+		List<String> playerNames = new ArrayList<>(numPlayers);
+		
+		System.out.println("Enter each players name, followed by [return].");
+		for (int i = 0; i < numPlayers; i++) {
+			playerNames.add(scanner.next());
+		}
+		
+		Game game = new Game(numPlayers, playerNames, scanner);
 		
 		//game.seeAllChips();
 		
 		while(true) {
 			game.runRound();
 			
-			game.cleanUpPlayers();
+			game.cleanUpRound();
 			
 			if (game.isOver()) {
 				System.out.println("All players are out of chips. Ending game.");
