@@ -6,16 +6,18 @@ import java.util.stream.Collectors;
 
 public class Player {
 	
-	private int id;
+	private String name;
 	private List<Card> hand;
 	private int chips;
 	private int handValue;
+	private int curWager;
 	
-	public Player(int id) {
-		this.id = id;
-		this.hand = new ArrayList<>(2);
+	public Player(String name) {
+		this.name = name;
+		this.hand = new ArrayList<>();
 		this.chips = 1000;
-		handValue = 0;
+		this.handValue = 0;
+		this.curWager = 0;
 	}
 	
 	public void deal(Card c) {
@@ -32,11 +34,32 @@ public class Player {
 		return this.chips;
 	}
 	
-	public int getId() {
-		return this.id;
+	public String getName() {
+		return this.name;
 	}
 	
 	public int getHandValue() {
 		return this.handValue;
+	}
+	
+	public int wager(int amount) {
+		this.chips -= amount;
+		this.curWager += amount;
+		return chips;
+	}
+	
+	public int refund(int amount) {
+		this.chips += amount;
+		return chips;
+	}
+	
+	public int getCurWager() {
+		return this.curWager;
+	}
+	
+	public void reset() {
+		this.hand = new ArrayList<>();
+		this.handValue = 0;
+		this.curWager = 0;
 	}
 }

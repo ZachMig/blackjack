@@ -13,16 +13,16 @@ public class Game {
 	private Scanner scanner;
 	
 	private final String spacer = "--------------";
-	private final int minWager = 50;
+	private static final int minWager = 50;
 	
-	public Game(int numPlayers, Scanner scanner) {
+	public Game(int numPlayers, List<String> playerNames, Scanner scanner) {
 		this.scanner = scanner;
 		this.players = new ArrayList<>();
 		this.deck = Card.getStandardDeck();
 		this.dealerHand = new ArrayList<>(2);
 		Collections.shuffle(deck);
 		for (int i = 0; i < numPlayers; i++) {
-			players.add(new Player(i));
+			players.add(new Player(playerNames.get(i)));
 		}
 	}
 	
@@ -39,15 +39,21 @@ public class Game {
 		System.out.println(spacer);
 		System.out.println("Starting new round. Minimum wager is " + minWager + " chips.");
 		
-		for (Player p : players) {
+		System.out.println("Dealer's Hand: " + dealerHand.get(0) + ", [Hidden]");
 
+		
+		for (Player p : players) {
+			
+			p.wager(minWager);
+			
 			System.out.println(spacer);
-			System.out.println("Player #" + p.getId() + "'s turn.");
+			System.out.println("Player " + p.getName() + "'s turn.");
 			System.out.println("Your hand is " + p.showHand());
 			System.out.println("Your hand is worth " + p.getHandValue());
 			
 			while (true) {
-				System.out.println("Would you like to hit (h), stand (s), hit and double down (d), or surrender (u)?");
+				System.out.println("Would you like to "
+						+ "hit (h), stand (s), hit and double down (d), surrender (u), or walk (w)?");
 				char c = scanner.next().charAt(0);
 				
 				if (c == 'h') {
@@ -56,27 +62,53 @@ public class Game {
 					System.out.println("Your hand is worth " + p.getHandValue());
 					
 					if (p.getHandValue() > 21) {
-						System.out.println("Player #" + p.getId() + " bust.");
-						
+						System.out.println("Player #" + p.getName() + " bust.");
+						System.out.println("Ending Player " + p.getName() + "'s turn.");
+						break;
 					}
 					
 				} else if (c == 's') {
+					System.out.println("Ending Player " + p.getName() + "'s turn.");
 					break;
 				} else if (c == 'd') {
-					//double wager
+					p.wager(minWager);
 					p.deal(deck.remove(0));
 					System.out.println("Your hand is now " + p.showHand());
-					System.out.println("Your wager is now " + "");
+					System.out.println("Your wager is now " + p.getCurWager());
+					if (p.getHandValue() > 21) {
+						System.out.println("Player #" + p.getName() + " bust.");
+						System.out.println("Ending Player " + p.getName() + "'s turn.");
+						break;
+					}
+					System.out.println("Ending Player " + p.getName() + "'s turn.");
 					break;
 				} else if (c == 'u') {
 					System.out.println("Refunding half your wager and removing you from this round.");
-					//TODO
+					p.refund(p.getCurWager()/2);
+					System.out.println("Ending Player " + p.getName() + "'s turn.");
+					break;
+				} else if (c == 'w') {
+					System.out.println("Ending Player " + p.getName() + "'s turn.");
+					players.remove(p);
 					break;
 				}
 			}
-			
-			System.out.println("Moving to next player.");
 		}
+		
+		System.out.println("All players done for the round.");
+		System.out.println("Dealer's Hand: " + dealerHand.get(0) + ", " + dealerHand.get(1));
+		int dealerHandValue = (dealerHand.get(0).value() + dealerHand.get(1).value());
+		System.out.println("Dealer's Hand is worth " + dealerHandValue);
+		
+		for (Player p : players) {
+			if (p.getHandValue() <= 21 && p.getHandValue() > dealerHandValue) {
+				System.out.println("Player " + p.getName() + " beats the house. Awarding double their wager of " + p.getCurWager());
+				p.refund(2 * p.getCurWager());
+			} else {
+				System.out.println("Player " + p.getName() + " loses to house. Losing wager of " + p.getCurWager());
+			}
+		}
+		
 		
 	}
 	
@@ -94,10 +126,16 @@ public class Game {
 		}
 	}
 	
-	public void cleanUpPlayers() {
+	public void cleanUpRound() {
+		
+		dealerHand = new ArrayList<>(2);
+		
 		for (Player p : players) {
-			if (p.getChips() == 0) {
-				System.out.println("Player #" + p.getId() + " can no longer play and is out of the game.");
+			
+			p.reset();
+			
+			if (p.getChips() < minWager) {
+				System.out.println("Player " + p.getName() + " can no longer play and is out of the game.");
 				players.remove(p);
 			}
 		}

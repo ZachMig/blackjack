@@ -3,7 +3,6 @@ package com.zachmig;
 import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -47,29 +46,8 @@ public record Card(Suit suit, String face, int value) {
 	public Card(Suit suit, String face, int value) {
 		this.suit = suit;
 		this.value = value;
-		
-		if (face.equals("J")) 
-			this.face = "Jack";
-		else if (face.equals("Q"))
-			this.face = "Queen";
-		else if (face.equals("K"))
-			this.face = "King";
-		else if (face.equals("A"))
-			this.face = "Ace";
-		else 
-			this.face = face;
+		this.face = face;
 	}
-	
-	
-	public static Card getNumericCard(Suit suit, int faceVal) {
-		return new Card(suit, Integer.toString(faceVal), faceVal);
-	}
-	
-	
-	public static Card getFaceCard(Suit suit, String abbr) {
-		return new Card(suit, abbr, "JQKA".indexOf(abbr) + 9);
-	}
-	
 	
 	public static List<Card> getStandardDeck() {
 		List<Card> deck = new ArrayList<>();
@@ -101,7 +79,7 @@ public record Card(Suit suit, String face, int value) {
 	@Override
 	public String toString() {
 		return String.format("%s%s", 
-			value <= 8 ? face : face.charAt(0), 
+			this.face, 
 			this.suit.toString().charAt(0));
 	}
 	
