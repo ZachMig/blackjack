@@ -52,41 +52,59 @@ public class Game {
 			System.out.println("Your hand is worth " + p.getHandValue());
 			
 			while (true) {
+				
+				//Blackjack
+				if (p.getHandValue() == 21) {
+					System.out.println("Player " + p.getName() + " Blackjack!");
+					System.out.println("Ending Player " + p.getName() + "'s turn.");
+					break;
+				} 
+				
 				System.out.println("Would you like to "
 						+ "hit (h), stand (s), hit and double down (d), surrender (u), or walk (w)?");
 				char c = scanner.next().charAt(0);
 				
+				//Hit
 				if (c == 'h') {
 					p.deal(deck.remove(0));
 					System.out.println("Your hand is now " + p.showHand());
 					System.out.println("Your hand is worth " + p.getHandValue());
 					
 					if (p.getHandValue() > 21) {
+						//Bust
 						System.out.println("Player #" + p.getName() + " bust.");
 						System.out.println("Ending Player " + p.getName() + "'s turn.");
 						break;
-					}
+					} else if (p.getHandValue() == 21) {
+						//Blackjack
+						System.out.println("Player " + p.getName() + " Blackjack!");
+						System.out.println("Ending Player " + p.getName() + "'s turn.");
+						break;
+					} 
 					
+				//Stand	
 				} else if (c == 's') {
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
 					break;
+				
+				//Double down and hit (once)
 				} else if (c == 'd') {
 					p.wager(minWager);
 					p.deal(deck.remove(0));
 					System.out.println("Your hand is now " + p.showHand());
 					System.out.println("Your wager is now " + p.getCurWager());
-					if (p.getHandValue() > 21) {
-						System.out.println("Player #" + p.getName() + " bust.");
-						System.out.println("Ending Player " + p.getName() + "'s turn.");
-						break;
-					}
+					checkHandValue(p);
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
 					break;
+					
+				//Surrender
 				} else if (c == 'u') {
 					System.out.println("Refunding half your wager and removing you from this round.");
 					p.refund(p.getCurWager()/2);
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
 					break;
+					
+				//Quit the game
 				} else if (c == 'w') {
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
 					players.remove(p);
@@ -120,6 +138,20 @@ public class Game {
 //		}
 //	}
 	
+	private void checkHandValue(Player p) {
+		if (p.getHandValue() > 21) {
+			//Bust
+			System.out.println("Player " + p.getName() + " bust.");
+			System.out.println("Ending Player " + p.getName() + "'s turn.");
+		} else if (p.getHandValue() == 21) {
+			//Blackjack
+			System.out.println("Player " + p.getName() + " Blackjack!");
+			System.out.println("Ending Player " + p.getName() + "'s turn.");
+		} else {
+			
+		}
+	}
+	
 	public void seeAllChips() {
 		for (Player p : players) {
 			System.out.println(p.getChips());
@@ -139,6 +171,9 @@ public class Game {
 				players.remove(p);
 			}
 		}
+		
+		this.deck = Card.getStandardDeck();
+		Collections.shuffle(this.deck);
 	}
 	
 	public boolean isOver() {
