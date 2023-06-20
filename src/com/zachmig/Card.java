@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public record Card(Suit suit, String face, int value) {
 	
-	enum Suit { 
+	public enum Suit { 
 		DIAMOND,
 		HEART,
 		CLUB,
@@ -60,21 +60,6 @@ public record Card(Suit suit, String face, int value) {
 		return deck;
 	}
 		
-	public static void printDeck(String desc, List<Card> deck, int rows) {
-		
-		System.out.println("------------");
-		System.out.println(desc);
-	
-		int cardsPerRow = deck.size() / rows;
-		
-		for (int i = 0; i < deck.size();) {
-			System.out.print(deck.get(i) + (++i%cardsPerRow == 0 ? "\n": ""));
-		}
-	}
-	
-	public static void printDeck(List<Card> deck) {
-		printDeck("Current Deck", deck, 4);
-	}
 	
 	@Override
 	public String toString() {
