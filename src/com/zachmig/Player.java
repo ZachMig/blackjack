@@ -22,11 +22,10 @@ public class Player {
 	
 	public void deal(Card c) {
 		hand.add(c);
-		handValue += c.value(); //Logic here for Aces 1/11
+		handValue += c.value(); 
 	}
 	
 	public String showHand() { 
-		//return new String(hand.get(0) + ", " + hand.get(1) + ": Value: " + handValue);
 		return hand.stream().map(Object::toString).collect(Collectors.joining(", "));
 	}
 	
