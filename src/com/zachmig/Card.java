@@ -36,17 +36,15 @@ public record Card(Suit suit, String face, int value) {
 			new AbstractMap.SimpleEntry<>("A", 11)
 			).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 	
-	
-	/**
-	 * Custom constructor to handle abbreviated values of face
-	 * @param suit
-	 * @param face
-	 * @param value
-	 */
+
 	public Card(Suit suit, String face, int value) {
 		this.suit = suit;
-		this.value = value;
 		this.face = face;
+		this.value = value;
+	}
+	
+	public Card(Suit suit, String face) {
+		this(suit, face, values.get(face));
 	}
 	
 	public static List<Card> getStandardDeck() {
@@ -54,7 +52,7 @@ public record Card(Suit suit, String face, int value) {
 		
 		for (int i = 0; i < allFaces.size(); i++) {
 			for (Suit s : Suit.values()) {
-				deck.add(new Card(s, allFaces.get(i), values.get(allFaces.get(i))));
+				deck.add(new Card(s, allFaces.get(i)));
 			}
 		}
 		return deck;
