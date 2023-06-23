@@ -80,5 +80,20 @@ public class PlayerTest {
 		p.deal(new Card(Card.Suit.HEART, "2"));
 		assertEquals("AD, 2H", p.showHand());
 	}
-
+	
+	@Test
+	public void testResetHand() {
+		p.deal(new Card(Card.Suit.DIAMOND, "A"));
+		p.deal(new Card(Card.Suit.HEART, "2"));
+		p.reset();
+		assertEquals("", p.showHand());
+	}
+	
+	@Test
+	public void testResetHandValue() {
+		p.deal(new Card(Card.Suit.DIAMOND, "A"));
+		p.deal(new Card(Card.Suit.HEART, "2"));
+		p.reset();
+		assertEquals(0, p.getHandValue(), 0.0);
+	}
 }

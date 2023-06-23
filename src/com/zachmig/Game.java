@@ -103,7 +103,7 @@ public class Game {
 					p.refund(p.getCurWager()/2);
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
 					break;
-					
+
 				//Quit the game
 				} else if (c == 'w') {
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
@@ -126,17 +126,7 @@ public class Game {
 				System.out.println("Player " + p.getName() + " loses to house. Losing wager of " + p.getCurWager());
 			}
 		}
-		
-		
 	}
-	
-//	public void showAllHands() {
-//		System.out.println(spacer);
-//		System.out.println("Dealer Hand: [Hidden}, " + dealerHand.get(0));
-//		for (Player p : players) {
-//			System.out.println(p.showHand());
-//		}
-//	}
 	
 	private void checkHandValue(Player p) {
 		if (p.getHandValue() > 21) {
@@ -148,7 +138,7 @@ public class Game {
 			System.out.println("Player " + p.getName() + " Blackjack!");
 			System.out.println("Ending Player " + p.getName() + "'s turn.");
 		} else {
-			
+			//Nothing
 		}
 	}
 	
