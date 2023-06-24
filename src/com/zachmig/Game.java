@@ -3,6 +3,7 @@ package com.zachmig;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Scanner;
 
 public class Game {
@@ -41,8 +42,12 @@ public class Game {
 		
 		System.out.println("Dealer's Hand: " + dealerHand.get(0) + ", [Hidden]");
 
+		ListIterator<Player> li = players.listIterator();
+		List<Player> playersInRound = new ArrayList<Player>(players);
 		
-		for (Player p : players) {
+		while (li.hasNext()) {
+			
+			Player p = li.next();
 			
 			p.wager(minWager);
 			
@@ -92,6 +97,7 @@ public class Game {
 					p.wager(minWager);
 					p.deal(deck.remove(0));
 					System.out.println("Your hand is now " + p.showHand());
+					System.out.println("Your hand is now worth " + p.getHandValue());
 					System.out.println("Your wager is now " + p.getCurWager());
 					checkHandValue(p);
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
@@ -102,12 +108,13 @@ public class Game {
 					System.out.println("Refunding half your wager and removing you from this round.");
 					p.refund(p.getCurWager()/2);
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
+					playersInRound.remove(p);
 					break;
 
 				//Quit the game
 				} else if (c == 'w') {
 					System.out.println("Ending Player " + p.getName() + "'s turn.");
-					players.remove(p);
+					li.remove();
 					break;
 				}
 			}
@@ -118,7 +125,7 @@ public class Game {
 		int dealerHandValue = (dealerHand.get(0).value() + dealerHand.get(1).value());
 		System.out.println("Dealer's Hand is worth " + dealerHandValue);
 		
-		for (Player p : players) {
+		for (Player p : playersInRound) {
 			if (p.getHandValue() <= 21 && p.getHandValue() > dealerHandValue) {
 				System.out.println("Player " + p.getName() + " beats the house. Awarding double their wager of " + p.getCurWager());
 				p.refund(2 * p.getCurWager());

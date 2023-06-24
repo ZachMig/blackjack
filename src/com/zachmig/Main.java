@@ -23,22 +23,18 @@ public class Main {
 		
 		Game game = new Game(numPlayers, playerNames, scanner);
 		
-		//game.seeAllChips();
-		
 		while(true) {
 			game.runRound();
 			
 			game.cleanUpRound();
 			
 			if (game.isOver()) {
-				System.out.println("All players are out of chips. Ending game.");
+				System.out.println("All players are out of the game. Ending game.");
 				break;
 			}
 			
 		}
-		
-		
-//		scanner.close();
+		scanner.close();
 	}
 
 }
