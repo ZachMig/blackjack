@@ -11,6 +11,7 @@ public class Player {
 	private int chips;
 	private int handValue;
 	private int curWager;
+	private boolean inCurRound;
 	
 	public Player(String name) {
 		this.name = name;
@@ -18,6 +19,7 @@ public class Player {
 		this.chips = 1000;
 		this.handValue = 0;
 		this.curWager = 0;
+		this.inCurRound = true;
 	}
 	
 	public void deal(Card c) {
@@ -56,9 +58,18 @@ public class Player {
 		return this.curWager;
 	}
 	
+	public void surrender() {
+		this.inCurRound = false;
+	}
+	
+	public boolean isInCurRound() {
+		return this.inCurRound;
+	}
+	
 	public void reset() {
 		this.hand = new ArrayList<>();
 		this.handValue = 0;
 		this.curWager = 0;
+		this.inCurRound = true;
 	}
 }
