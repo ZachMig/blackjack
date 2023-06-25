@@ -16,7 +16,7 @@ public class Player {
 	public Player(String name) {
 		this.name = name;
 		this.hand = new ArrayList<>();
-		this.chips = 1000;
+		this.chips = 100;
 		this.handValue = 0;
 		this.curWager = 0;
 		this.inCurRound = true;

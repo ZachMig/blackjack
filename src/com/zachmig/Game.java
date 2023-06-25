@@ -158,14 +158,15 @@ public class Game {
 	public void cleanUpRound() {
 		
 		dealerHand = new ArrayList<>(2);
+		ListIterator<Player> li = players.listIterator();
 		
-		for (Player p : players) {
-			
+		while (li.hasNext()) {
+			Player p = li.next();
 			p.reset();
 			
 			if (p.getChips() < minWager) {
 				System.out.println("Player " + p.getName() + " can no longer play and is out of the game.");
-				players.remove(p);
+				li.remove();
 			}
 		}
 		
